@@ -28,7 +28,6 @@ public class Main {
             switch (choice) {
                 case 1:
                     if (flag == 0) {
-                        flagClose=0;
                         System.out.print("File path:");
                         Scanner scanner = new Scanner(System.in);
                         path = scanner.next();
@@ -38,6 +37,8 @@ public class Main {
                             if (elements != null) {
                                 Functionality.load(elements, rectangles, circles, line);
                                 flag = 1;
+                                flagClose=0;
+                                System.out.println("Successfully opened " + path);
                             }
 
                         } else {
@@ -57,12 +58,15 @@ public class Main {
                         switch (figure) {
                             case "Circle":
                                 Functionality.createCircle(circles, circles1);
+                                System.out.println("Successfully created circle");
                                 break;
                             case "Rectangle":
                                 Functionality.createRectangle(rectangles, rectangles1);
+                                System.out.println("Successfully created rectangle");
                                 break;
                             case "Line":
                                 Functionality.createLine(line, lines);
+                                System.out.println("Successfully created line");
                                 break;
                             default:
                                 System.out.println("Invalid input");
@@ -73,7 +77,9 @@ public class Main {
                     break;
 
                 case 3:
+
                     if (flag == 1&&flagClose==0) {
+                        System.out.println("Print:");
                         Functionality.print(rectangles, circles, line);
                     } else {
                         System.out.println("File is not opened yet or it's closed");
@@ -84,6 +90,7 @@ public class Main {
                     if (flag == 1&&flagClose==0) {
                         Functionality.save(path, circles1, rectangles1, lines);
                         Functionality.removeFile(path,integers);
+                        System.out.println("Successfully saved the changes to " + path);
                     }else {
                         System.out.println("File is not opened yet or it's closed");
                     }
@@ -92,7 +99,7 @@ public class Main {
                 case 5:
                     if (flag == 1&&flagClose==0) {
                         Scanner scanner = new Scanner(System.in);
-                        System.out.println("Enter path");
+                        System.out.print("Enter path:");
                         String saveAs = scanner.next();
                         boolean endsWithSvg = saveAs.endsWith(".svg");
                         if (endsWithSvg) {
@@ -135,9 +142,15 @@ public class Main {
                     }
                     break;
                 case 8:
-                    Scanner scanner=new Scanner(System.in);
-                    int index= scanner.nextInt();
-                    Functionality.remove(index,rectangles,circles,line,integers);
+                    if (flag == 1&&flagClose==0) {
+                        Scanner scanner = new Scanner(System.in);
+                        System.out.print("Enter the index of the figure to be removed:");
+                        int index = scanner.nextInt();
+                        Functionality.remove(index, rectangles, circles, line, integers);
+                        System.out.println("Successfully Erased");
+                    }else {
+                        System.out.println("File is not opened yet or it's closed");
+                    }
             }
 
         }while (choice != 9) ;

@@ -238,6 +238,8 @@ public class Functionality {
     }
 
 
+
+
     public static void save(String path, ArrayList<Circle> c,ArrayList<Rectangle> r,ArrayList<Lines> l) throws ParserConfigurationException, IOException, SAXException, TransformerException, NoSuchFieldException, IllegalAccessException {
         Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse((path));
         if(c.size()>0&&r.size()>0&&l.size()>0) {
@@ -306,14 +308,15 @@ public class Functionality {
                 biggest = biggestR;
             }
             for (int i = smallest; i <= biggest; i++) {
-                for (Circle k : c) {
-                    if (k.getIndex() == i) {
+                for (int z=0;z<c.size();z++) {
+                    if(c.get(z).getIndex()==i) {
                         Element circle = doc.createElementNS("http://www.w3.org/2000/svg", "circle");
-                        circle.setAttribute("cx", Float.toString(k.getCx()));
-                        circle.setAttribute("cy", Float.toString(k.getCy()));
-                        circle.setAttribute("r", Float.toString(k.getR()));
-                        circle.setAttribute("fill", k.getColor());
+                        circle.setAttribute("cx", Float.toString(c.get(z).getCx()));
+                        circle.setAttribute("cy", Float.toString(c.get(z).getCy()));
+                        circle.setAttribute("r", Float.toString(c.get(z).getR()));
+                        circle.setAttribute("fill", c.get(z).getColor());
                         doc.getDocumentElement().appendChild(circle);
+                        c.remove(z);
 
                         // Записване на SVG файл
                         Transformer transformer = TransformerFactory.newInstance().newTransformer();
@@ -321,35 +324,39 @@ public class Functionality {
                         StreamResult result = new StreamResult((path));
                         transformer.transform(source, result);
                     }
+
                 }
-                for (Lines k : l) {
-                    if (k.getIndex() == i) {
+                for (int z=0;z<l.size();z++) {
+                    if(l.get(z).getIndex()==i) {
+
                         Element line = doc.createElementNS("http://www.w3.org/2000/svg", "line");
-                        line.setAttribute("x1", Float.toString(k.getX1()));
-                        line.setAttribute("y1", Float.toString(k.getY1()));
-                        line.setAttribute("x2", Float.toString(k.getX2()));
-                        line.setAttribute("y2", Float.toString(k.getY2()));
-                        Color color = (Color) Color.class.getField(k.getColor().toLowerCase()).get(null);
+                        line.setAttribute("x1", Float.toString(l.get(z).getX1()));
+                        line.setAttribute("y1", Float.toString(l.get(z).getY1()));
+                        line.setAttribute("x2", Float.toString(l.get(z).getX2()));
+                        line.setAttribute("y2", Float.toString(l.get(z).getY2()));
+                        Color color = (Color) Color.class.getField(l.get(z).getColor().toLowerCase()).get(null);
                         line.setAttribute("style", "stroke:" + String.format("rgb(%d,%d,%d)", color.getRed(), color.getGreen(), color.getBlue()) + ";stroke-width:2");
 
                         doc.getDocumentElement().appendChild(line);
-
+                        l.remove(z);
                         // Записване на SVG файл
                         Transformer transformer = TransformerFactory.newInstance().newTransformer();
                         DOMSource source = new DOMSource(doc);
                         StreamResult result = new StreamResult((path));
                         transformer.transform(source, result);
                     }
+
                 }
-                for (Rectangle k : r) {
-                    if (k.getIndex() == i) {
+                for (int z=0;z<r.size();z++) {
+                    if(r.get(z).getIndex()==i) {
                         Element rectangle = doc.createElementNS("http://www.w3.org/2000/svg", "rect");
-                        rectangle.setAttribute("x", Float.toString(k.getX()));
-                        rectangle.setAttribute("y", Float.toString(k.getY()));
-                        rectangle.setAttribute("width", Float.toString(k.getWidth()));
-                        rectangle.setAttribute("height", Float.toString(k.getHeight()));
-                        rectangle.setAttribute("fill", k.getColor());
+                        rectangle.setAttribute("x", Float.toString(r.get(z).getX()));
+                        rectangle.setAttribute("y", Float.toString(r.get(z).getY()));
+                        rectangle.setAttribute("width", Float.toString(r.get(z).getWidth()));
+                        rectangle.setAttribute("height", Float.toString(r.get(z).getHeight()));
+                        rectangle.setAttribute("fill", r.get(z).getColor());
                         doc.getDocumentElement().appendChild(rectangle);
+                        r.remove(z);
 
                         // Записване на SVG файл
                         Transformer transformer = TransformerFactory.newInstance().newTransformer();
@@ -407,14 +414,15 @@ public class Functionality {
                 biggest=biggestR;
             }
             for (int i = smallest; i <= biggest; i++) {
-                for (Circle k : c) {
-                    if (k.getIndex() == i) {
+                for (int z=0;z<c.size();z++) {
+                    if(c.get(z).getIndex()==i) {
                         Element circle = doc.createElementNS("http://www.w3.org/2000/svg", "circle");
-                        circle.setAttribute("cx", Float.toString(k.getCx()));
-                        circle.setAttribute("cy", Float.toString(k.getCy()));
-                        circle.setAttribute("r", Float.toString(k.getR()));
-                        circle.setAttribute("fill", k.getColor());
+                        circle.setAttribute("cx", Float.toString(c.get(z).getCx()));
+                        circle.setAttribute("cy", Float.toString(c.get(z).getCy()));
+                        circle.setAttribute("r", Float.toString(c.get(z).getR()));
+                        circle.setAttribute("fill", c.get(z).getColor());
                         doc.getDocumentElement().appendChild(circle);
+                        c.remove(z);
 
                         // Записване на SVG файл
                         Transformer transformer = TransformerFactory.newInstance().newTransformer();
@@ -423,15 +431,16 @@ public class Functionality {
                         transformer.transform(source, result);
                     }
                 }
-                for (Rectangle k : r) {
-                    if (k.getIndex() == i) {
+                for (int z=0;z<r.size();z++) {
+                    if(r.get(z).getIndex()==i) {
                         Element rectangle = doc.createElementNS("http://www.w3.org/2000/svg", "rect");
-                        rectangle.setAttribute("x", Float.toString(k.getX()));
-                        rectangle.setAttribute("y", Float.toString(k.getY()));
-                        rectangle.setAttribute("width", Float.toString(k.getWidth()));
-                        rectangle.setAttribute("height", Float.toString(k.getHeight()));
-                        rectangle.setAttribute("fill", k.getColor());
+                        rectangle.setAttribute("x", Float.toString(r.get(z).getX()));
+                        rectangle.setAttribute("y", Float.toString(r.get(z).getY()));
+                        rectangle.setAttribute("width", Float.toString(r.get(z).getWidth()));
+                        rectangle.setAttribute("height", Float.toString(r.get(z).getHeight()));
+                        rectangle.setAttribute("fill", r.get(z).getColor());
                         doc.getDocumentElement().appendChild(rectangle);
+                        r.remove(z);
 
                         // Записване на SVG файл
                         Transformer transformer = TransformerFactory.newInstance().newTransformer();
@@ -459,6 +468,7 @@ public class Functionality {
                     smallestC = c.get(i).getIndex();
                 }
             }
+
 
 
             for (int i = 0; i < l.size(); i++) {
@@ -492,14 +502,15 @@ public class Functionality {
                 biggest=biggestL;
             }
             for (int i = smallest; i <= biggest; i++) {
-                for (Circle k : c) {
-                    if (k.getIndex() == i) {
+                for (int z=0;z<c.size();z++) {
+                    if(c.get(z).getIndex()==i) {
                         Element circle = doc.createElementNS("http://www.w3.org/2000/svg", "circle");
-                        circle.setAttribute("cx", Float.toString(k.getCx()));
-                        circle.setAttribute("cy", Float.toString(k.getCy()));
-                        circle.setAttribute("r", Float.toString(k.getR()));
-                        circle.setAttribute("fill", k.getColor());
+                        circle.setAttribute("cx", Float.toString(c.get(z).getCx()));
+                        circle.setAttribute("cy", Float.toString(c.get(z).getCy()));
+                        circle.setAttribute("r", Float.toString(c.get(z).getR()));
+                        circle.setAttribute("fill", c.get(z).getColor());
                         doc.getDocumentElement().appendChild(circle);
+                        c.remove(z);
 
                         // Записване на SVG файл
                         Transformer transformer = TransformerFactory.newInstance().newTransformer();
@@ -508,18 +519,18 @@ public class Functionality {
                         transformer.transform(source, result);
                     }
                 }
-                for (Lines k : l) {
-                    if (k.getIndex() == i) {
+                for (int z=0;z<l.size();z++) {
+                    if(l.get(z).getIndex()==i) {
                         Element line = doc.createElementNS("http://www.w3.org/2000/svg", "line");
-                        line.setAttribute("x1", Float.toString(k.getX1()));
-                        line.setAttribute("y1", Float.toString(k.getY1()));
-                        line.setAttribute("x2", Float.toString(k.getX2()));
-                        line.setAttribute("y2", Float.toString(k.getY2()));
-                        Color color = (Color) Color.class.getField(k.getColor().toLowerCase()).get(null);
+                        line.setAttribute("x1", Float.toString(l.get(z).getX1()));
+                        line.setAttribute("y1", Float.toString(l.get(z).getY1()));
+                        line.setAttribute("x2", Float.toString(l.get(z).getX2()));
+                        line.setAttribute("y2", Float.toString(l.get(z).getY2()));
+                        Color color = (Color) Color.class.getField(l.get(z).getColor().toLowerCase()).get(null);
                         line.setAttribute("style", "stroke:" + String.format("rgb(%d,%d,%d)", color.getRed(), color.getGreen(), color.getBlue()) + ";stroke-width:2");
 
                         doc.getDocumentElement().appendChild(line);
-
+                        l.remove(z);
                         // Записване на SVG файл
                         Transformer transformer = TransformerFactory.newInstance().newTransformer();
                         DOMSource source = new DOMSource(doc);
@@ -579,15 +590,16 @@ public class Functionality {
                 biggest=biggestL;
             }
             for (int i = smallest; i <= biggest; i++) {
-                for (Rectangle k : r) {
-                    if (k.getIndex() == i) {
+                for (int z=0;z<r.size();z++) {
+                    if(r.get(z).getIndex()==i) {
                         Element rectangle = doc.createElementNS("http://www.w3.org/2000/svg", "rect");
-                        rectangle.setAttribute("x", Float.toString(k.getX()));
-                        rectangle.setAttribute("y", Float.toString(k.getY()));
-                        rectangle.setAttribute("width", Float.toString(k.getWidth()));
-                        rectangle.setAttribute("height", Float.toString(k.getHeight()));
-                        rectangle.setAttribute("fill", k.getColor());
+                        rectangle.setAttribute("x", Float.toString(r.get(z).getX()));
+                        rectangle.setAttribute("y", Float.toString(r.get(z).getY()));
+                        rectangle.setAttribute("width", Float.toString(r.get(z).getWidth()));
+                        rectangle.setAttribute("height", Float.toString(r.get(z).getHeight()));
+                        rectangle.setAttribute("fill", r.get(z).getColor());
                         doc.getDocumentElement().appendChild(rectangle);
+                        r.remove(z);
 
                         // Записване на SVG файл
                         Transformer transformer = TransformerFactory.newInstance().newTransformer();
@@ -596,18 +608,18 @@ public class Functionality {
                         transformer.transform(source, result);
                     }
                 }
-                for (Lines k : l) {
-                    if (k.getIndex() == i) {
+                for (int z=0;z<l.size();z++) {
+                    if(l.get(z).getIndex()==i) {
                         Element line = doc.createElementNS("http://www.w3.org/2000/svg", "line");
-                        line.setAttribute("x1", Float.toString(k.getX1()));
-                        line.setAttribute("y1", Float.toString(k.getY1()));
-                        line.setAttribute("x2", Float.toString(k.getX2()));
-                        line.setAttribute("y2", Float.toString(k.getY2()));
-                        Color color = (Color) Color.class.getField(k.getColor().toLowerCase()).get(null);
+                        line.setAttribute("x1", Float.toString(l.get(z).getX1()));
+                        line.setAttribute("y1", Float.toString(l.get(z).getY1()));
+                        line.setAttribute("x2", Float.toString(l.get(z).getX2()));
+                        line.setAttribute("y2", Float.toString(l.get(z).getY2()));
+                        Color color = (Color) Color.class.getField(l.get(z).getColor().toLowerCase()).get(null);
                         line.setAttribute("style", "stroke:" + String.format("rgb(%d,%d,%d)", color.getRed(), color.getGreen(), color.getBlue()) + ";stroke-width:2");
 
                         doc.getDocumentElement().appendChild(line);
-
+                        l.remove(z);
                         // Записване на SVG файл
                         Transformer transformer = TransformerFactory.newInstance().newTransformer();
                         DOMSource source = new DOMSource(doc);
@@ -622,13 +634,14 @@ public class Functionality {
         }
 
         if(c.size()>0&&r.isEmpty()&&l.isEmpty()){
-            for (Circle k : c) {
+            for (int i=0;i<c.size();i++) {
                 Element circle = doc.createElementNS("http://www.w3.org/2000/svg", "circle");
-                circle.setAttribute("cx", Float.toString(k.getCx()));
-                circle.setAttribute("cy", Float.toString(k.getCy()));
-                circle.setAttribute("r", Float.toString(k.getR()));
-                circle.setAttribute("fill", k.getColor());
+                circle.setAttribute("cx", Float.toString(c.get(i).getCx()));
+                circle.setAttribute("cy", Float.toString(c.get(i).getCy()));
+                circle.setAttribute("r", Float.toString(c.get(i).getR()));
+                circle.setAttribute("fill", c.get(i).getColor());
                 doc.getDocumentElement().appendChild(circle);
+                c.remove(i);
 
                 // Записване на SVG файл
                 Transformer transformer = TransformerFactory.newInstance().newTransformer();
@@ -640,15 +653,16 @@ public class Functionality {
         }
 
         if(r.size()>0&&c.isEmpty()&&l.isEmpty()) {
-            for (Rectangle k : r) {
+            for (int i=0;i<r.size();i++) {
 
                 Element rectangle = doc.createElementNS("http://www.w3.org/2000/svg", "rect");
-                rectangle.setAttribute("x", Float.toString(k.getX()));
-                rectangle.setAttribute("y", Float.toString(k.getY()));
-                rectangle.setAttribute("width", Float.toString(k.getWidth()));
-                rectangle.setAttribute("height", Float.toString(k.getHeight()));
-                rectangle.setAttribute("fill", k.getColor());
+                rectangle.setAttribute("x", Float.toString(r.get(i).getX()));
+                rectangle.setAttribute("y", Float.toString(r.get(i).getY()));
+                rectangle.setAttribute("width", Float.toString(r.get(i).getWidth()));
+                rectangle.setAttribute("height", Float.toString(r.get(i).getHeight()));
+                rectangle.setAttribute("fill", r.get(i).getColor());
                 doc.getDocumentElement().appendChild(rectangle);
+                r.remove(i);
 
                 // Записване на SVG файл
                 Transformer transformer = TransformerFactory.newInstance().newTransformer();
@@ -661,18 +675,18 @@ public class Functionality {
 
         if(l.size()>0&&c.isEmpty()&&r.isEmpty()) {
 
-            for (Lines k : l) {
+            for (int i=0;i<l.size();i++) {
 
                 Element line = doc.createElementNS("http://www.w3.org/2000/svg", "line");
-                line.setAttribute("x1", Float.toString(k.getX1()));
-                line.setAttribute("y1", Float.toString(k.getY1()));
-                line.setAttribute("x2", Float.toString(k.getX2()));
-                line.setAttribute("y2", Float.toString(k.getY2()));
-                Color color = (Color) Color.class.getField(k.getColor().toLowerCase()).get(null);
+                line.setAttribute("x1", Float.toString(l.get(i).getX1()));
+                line.setAttribute("y1", Float.toString(l.get(i).getY1()));
+                line.setAttribute("x2", Float.toString(l.get(i).getX2()));
+                line.setAttribute("y2", Float.toString(l.get(i).getY2()));
+                Color color = (Color) Color.class.getField(l.get(i).getColor().toLowerCase()).get(null);
                 line.setAttribute("style", "stroke:" + String.format("rgb(%d,%d,%d)", color.getRed(), color.getGreen(), color.getBlue()) + ";stroke-width:2");
 
                 doc.getDocumentElement().appendChild(line);
-
+                l.remove(i);
                 // Записване на SVG файл
                 Transformer transformer = TransformerFactory.newInstance().newTransformer();
                 DOMSource source = new DOMSource(doc);
